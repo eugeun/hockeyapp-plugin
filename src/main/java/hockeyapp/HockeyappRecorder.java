@@ -369,17 +369,18 @@ public class HockeyappRecorder extends Recorder implements SimpleBuildStep {
                     logger.println("Value of config url: " + configUrl);
 
                     try {
-                        FilePath fpath = new FilePath(workspace.absolutize(), "hockeyapp-url.properties");
-                        logger.println("Saving URLs to file1: '" + fpath.getRemote() + "'...");
-
-                        File fname = new File(fpath.getRemote());
+                        File base_dir = new File(remoteWorkspace.absolutize().getRemote());
+                        logger.println("Base dir: " + base_dir);
+                        base_dir.mkdirs();
+                        File fname = new File(base_dir, "hockeyapp-url.properties");
+                        logger.println("Saving URLs to file: '" + fname + "'...");
 
                         FileWriter writer = new FileWriter(fname);
-                        writer.write("HOCKEYAPP_INSTALL_URL=" + installUrl);
-                        writer.write("HOCKEYAPP_CONFIG_URL=" + configUrl);
+                        writer.write("HOCKEYAPP_INSTALL_URL=" + installUrl + "\n");
+                        writer.write("HOCKEYAPP_CONFIG_URL=" + configUrl + "\n");
                         writer.close();
                     } catch (IOException ex) {
-                        logger.println("Save url properties" + ex);
+                        logger.println("Save url properties: " + ex);
                     }
 
                 }
