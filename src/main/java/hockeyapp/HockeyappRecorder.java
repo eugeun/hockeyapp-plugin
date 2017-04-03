@@ -353,7 +353,11 @@ public class HockeyappRecorder extends Recorder implements SimpleBuildStep {
                 int appIndex = applications.indexOf(application);
 
                 EnvAction envData = new EnvAction();
+                System.out.println("Declaration: " + envData);
                 build.addAction(envData);
+                System.out.println("After added action:" + envData);
+                System.out.println("Value of install url: " + installUrl);
+                System.out.println("Value of config url" + configUrl);
 
                 if (envData != null) {
 
