@@ -353,11 +353,7 @@ public class HockeyappRecorder extends Recorder implements SimpleBuildStep {
                 int appIndex = applications.indexOf(application);
 
                 EnvAction envData = new EnvAction();
-                System.out.println("Declaration: " + envData);
                 build.addAction(envData);
-                System.out.println("After added action:" + envData);
-                System.out.println("Value of install url: " + installUrl);
-                System.out.println("Value of config url" + configUrl);
 
                 if (envData != null) {
 
@@ -368,6 +364,21 @@ public class HockeyappRecorder extends Recorder implements SimpleBuildStep {
 
                     envData.add("HOCKEYAPP_INSTALL_URL_" + appIndex, installUrl);
                     envData.add("HOCKEYAPP_CONFIG_URL_" + appIndex, configUrl);
+
+                    logger.println("Value of install url: " + installUrl);
+                    logger.println("Value of config url: " + configUrl);
+
+                    try {
+                        File fname = new File(remoteWorkspace.getBaseName(), "hockeyapp-url.properties");
+                        logger.println("Saving URLs to file: '" + fname + "'...");
+                        FileWriter writer = new FileWriter(fname);
+                        writer.write("HOCKEYAPP_INSTALL_URL=" + installUrl);
+                        writer.write("HOCKEYAPP_CONFIG_URL=" + configUrl);
+                        writer.close();
+                    } catch (IOException ex) {
+                        logger.println("Save url properties" + ex);
+                    }
+
                 }
 
                 String appId;
